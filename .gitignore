@@ -1,1 +1,17 @@
-'.idea' 
+'.idea'
+# Default ignored files
+*.xml
+
+*.class
+*.jar
+*.var
+*.ear
+*.log
+
+*.iml
+.idea/
+/out/
+.idea
+*.log
+*.properties
+*.yaml
