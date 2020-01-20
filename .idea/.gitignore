@@ -1,0 +1,14 @@
+# Default ignored files
+/.idea/workspace.xml
+
+*.class
+*.jar
+*.var
+*.ear
+*.log
+
+*.iml
+.idea/
+/out/
+.idea
+*.log
