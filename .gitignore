@@ -15,3 +15,12 @@
 *.log
 *.properties
 *.yaml
+*.Problems*/
+*.css
+*.html
+*.bin
+*.gradle/
+*.lock
+*.bat
+*.tmp
+
