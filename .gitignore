@@ -15,14 +15,7 @@
 *.log
 *.properties
 *.yaml
-/Problems/
-/Problems (1)/
-/Problems (2)/
-/Problems (3)/
-/Problems (4)/
-/Problems (5)/
-/Problems (6)/
-/Problems (7)/
+/Problems*
 *.css
 *.html
 *.bin
