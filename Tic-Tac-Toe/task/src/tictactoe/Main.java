@@ -7,25 +7,11 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        System.out.print("Enter cells: ");
-        Scanner scanner = new Scanner(System.in);
-        char[] arr = scanner.next().toCharArray(); // array of full cells
-        char[][] tictac = new char[3][3];          // M x M array for my grid
-        int k = 0;
+        char[][] tictac = new char[][]{{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};          // M x M array for my grid
         int coordI;
         int coordJ;
-
-        // filling of grid
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                tictac[i][j] = arr[k];
-                k++;
-            }
-        }
-
-
+        int k = 0; //counter for X or O
         printGrid(tictac);
-        tictac = turnToRight(tictac);
 
         while (true) {
             System.out.print("Enter the coordinates: ");
@@ -33,7 +19,6 @@ public class Main {
             try {
                 coordI = scanner.nextInt();
                 coordJ = scanner.nextInt();
-                //System.out.println();
 
             } catch (Exception e) {
                 System.out.println("You should enter numbers!"); // if exception, try again
@@ -48,95 +33,89 @@ public class Main {
                 System.out.println("This cell is occupied! Choose another one!");
                 continue;
             } else {
-                tictac[coordI - 1][coordJ - 1] = 'X';
-                printGridAndRotate(tictac);
-                /*if (checkGrid(tictac)){
-                    break;
-                }*/
-                break;
-            }
-        }
+                switch (k % 2) {
+                    case 0:
+                        tictac[coordI - 1][coordJ - 1] = 'X';
+                        printGridAndRotate(tictac);
+                        break;
 
-        /*
+                    case 1:
+                        tictac[coordI - 1][coordJ - 1] = 'O';
+                        printGridAndRotate(tictac);
+                        break;
+                }
+                if (checkWinCondition(tictac) == 'X') {
+                    System.out.println("X wins");
+                    break;
+                }
+                if (checkWinCondition(tictac) == 'O') {
+                    System.out.println("O wins");
+                    break;
+                }
+                if (checkWinCondition(tictac) == 'D') {
+                    System.out.println("Draw");
+                    break;
+                }
+            }
+            k++;
+        }
+    }
+
+
+    public static char checkWinCondition(char[][] arr) {
 
         int countX = 0;
         int countO = 0;
         int countEmpty = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == 'X') {
-                countX++;
-            } else if (arr[i] == 'O') {
-                countO++;
-            } else {
-                countEmpty++;
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] == 'X') {
+                    countX++;
+                } else if (arr[i][j] == 'O') {
+                    countO++;
+                } else {
+                    countEmpty++;
+                }
             }
         }
 
-        boolean firstLineX = arr[0] == 'X' && arr[1] == 'X' && arr[2] == 'X';
-        boolean secondLineO = arr[3] == 'O' && arr[4] == 'O' && arr[5] == 'O';
-        boolean secondLineX = arr[3] == 'X' && arr[4] == 'X' && arr[5] == 'X';
-        boolean thirdLineX = arr[6] == 'X' && arr[7] == 'X' && arr[8] == 'X';
-        boolean thirdLineO = arr[6] == 'O' && arr[7] == 'O' && arr[8] == 'O';
-        boolean firstLineO = arr[0] == 'O' && arr[1] == 'O' && arr[2] == 'O';
-        boolean firstColumnX = arr[0] == 'X' && arr[3] == 'X' && arr[6] == 'X';
-        boolean secondColumnO = arr[1] == 'O' && arr[4] == 'O' && arr[7] == 'O';
-        boolean secondColumnX = arr[1] == 'X' && arr[4] == 'X' && arr[7] == 'X';
-        boolean thirdColumnO = arr[2] == 'O' && arr[5] == 'O' && arr[8] == 'O';
-        boolean thirdColumnX = arr[2] == 'X' && arr[5] == 'X' && arr[8] == 'X';
-        boolean firstColumnO = arr[0] == 'O' && arr[3] == 'O' && arr[6] == 'O';
-        boolean firstDiagX = arr[0] == 'X' && arr[4] == 'X' && arr[8] == 'X';
-        boolean firstDiagO = arr[0] == 'O' && arr[4] == 'O' && arr[8] == 'O';
-        boolean secondDiagX = arr[2] == 'X' && arr[4] == 'X' && arr[6] == 'X';
-        boolean secondDiagO = arr[2] == 'O' && arr[4] == 'O' && arr[6] == 'O';
+        boolean firstLineX = arr[0][0] == 'X' && arr[0][1] == 'X' && arr[0][2] == 'X';
+        boolean secondLineO = arr[1][0] == 'O' && arr[1][1] == 'O' && arr[1][2] == 'O';
+        boolean secondLineX = arr[1][0] == 'X' && arr[1][1] == 'X' && arr[1][2] == 'X';
+        boolean thirdLineX = arr[2][0] == 'X' && arr[2][1] == 'X' && arr[2][2] == 'X';
+        boolean thirdLineO = arr[2][0] == 'O' && arr[2][1] == 'O' && arr[2][2] == 'O';
+        boolean firstLineO = arr[0][0] == 'O' && arr[0][1] == 'O' && arr[0][2] == 'O';
+        boolean firstColumnX = arr[0][0] == 'X' && arr[1][0] == 'X' && arr[2][0] == 'X';
+        boolean secondColumnO = arr[0][1] == 'O' && arr[1][1] == 'O' && arr[2][1] == 'O';
+        boolean secondColumnX = arr[0][1] == 'X' && arr[1][1] == 'X' && arr[2][1] == 'X';
+        boolean thirdColumnO = arr[0][2] == 'O' && arr[1][2] == 'O' && arr[2][2] == 'O';
+        boolean thirdColumnX = arr[0][2] == 'X' && arr[1][2] == 'X' && arr[2][2] == 'X';
+        boolean firstColumnO = arr[0][0] == 'O' && arr[1][0] == 'O' && arr[2][0] == 'O';
+        boolean firstDiagX = arr[0][0] == 'X' && arr[1][1] == 'X' && arr[2][2] == 'X';
+        boolean firstDiagO = arr[0][0] == 'O' && arr[1][1] == 'O' && arr[2][2] == 'O';
+        boolean secondDiagX = arr[0][2] == 'X' && arr[1][1] == 'X' && arr[2][0] == 'X';
+        boolean secondDiagO = arr[0][2] == 'O' && arr[1][1] == 'O' && arr[2][0] == 'O';
 
-        boolean impossible = (Math.abs(countX - countO) >= 2) ||
-                (firstLineX && secondLineO
-                        || secondLineX && thirdLineO
-                        || thirdLineX && firstLineO
-                        || firstLineO && secondLineX
-                        || secondLineO && thirdLineX
-                        || thirdLineO && firstLineX
-                        || firstColumnX && secondColumnO
-                        || secondColumnX && thirdColumnO
-                        || thirdColumnX && firstColumnO
-                        || firstColumnO && secondColumnX
-                        || secondColumnO && thirdColumnX
-                        || thirdColumnO && firstColumnX);
+        boolean winX = firstLineX || secondLineX || thirdLineX || firstColumnX || secondColumnX || thirdColumnX || firstDiagX || secondDiagX;
+        boolean winO = firstLineO || secondLineO || thirdLineO || firstColumnO || secondColumnO || thirdColumnO || firstDiagO || secondDiagO;
 
-        boolean notFinished = !(firstLineX
-                || secondLineO
-                || secondLineX
-                || thirdLineX
-                || thirdLineO
-                || firstLineO
-                || firstColumnX
-                || secondColumnO
-                || secondColumnX
-                || thirdColumnO
-                || thirdColumnX
-                || firstColumnO
-                || firstDiagX
-                || firstDiagO
-                || secondDiagX
-                || secondDiagO);
+        if (winX) {
+            return 'X';
+        }
+        if (winO) {
+            return 'O';
+        }
+        if (countEmpty == 0) {
+            return 'D';
+        }
 
-        if (impossible) {
-            System.out.println("Impossible");
-        } else if (notFinished && countEmpty != 0) {
-            System.out.println("Game not finished");
-        } else if (firstLineX || secondLineX || thirdLineX || firstColumnX || secondColumnX || thirdColumnX || firstDiagX || secondDiagX) {
-            System.out.println("X wins");
-        } else if (firstLineO || secondLineO || thirdLineO || firstColumnO || secondColumnO || thirdColumnO || firstDiagO || secondDiagO){
-            System.out.println("O wins");
-        } else if (countEmpty == 0) {
-            System.out.println("Draw");
-        }*/
-
+        return 'N';
     }
 
+
     public static boolean checkCell(int i, int j, char[][] chars) {
-        if (chars[i - 1][j - 1] != '_') {
+        if (chars[i - 1][j - 1] != ' ') {
             return true;
         } else {
             return false;
